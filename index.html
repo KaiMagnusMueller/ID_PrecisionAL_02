@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Quickstart with Arduino and Electron</title>
+    <script>
+        // to use jQuery and others, window.module should not exist
+        // this renames it to window.nodeModule
+        window.nodeModule = window.module;
+        delete window.module;
+    </script>
+    <script src="lib/jquery-3.1.1.min.js"></script>
+    <script src="lib/three.js"></script>
+
+    <script src="lib/leap-0.6.4.min.js"></script>
+    <script src="lib/leap-plugins-0.1.12.min.js"></script>
+    <script src="lib/leap.rigged-hand-0.1.7.min.js"></script>
+
+    <script type="text/javascript" src="lib/jquery-3.1.1.min.js"></script>
+
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<button>Toggle onboard LED</button>
+<div id=bg></div>
+
+<div class="display" id="display"></div>
+<!--Mitte-->
+<div class="verticalSlider" id="verticalSlider"></div>
+<div class="horizontalSlider" id="horizontalSlider"></div>
+<p id=output class="output"></p>
+</body>
+<script src="main.js"></script>
+<script type="text/javascript" src="js/code.js"></script>
+</html>
