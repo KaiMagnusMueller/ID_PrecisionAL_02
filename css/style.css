@@ -10,9 +10,9 @@ body {
 }
 
 .output {
-    font-family: "DIN Pro";
+    font-family: "sans-serif";
     font-weight: 100;
-    font-size: 30px;
+    font-size: 24px;
     color: #666;
     text-align: left;
     position: fixed;
@@ -20,8 +20,19 @@ body {
     left: 18px;
 }
 
+.outputValue {
+    font-family: "sans-serif";
+    font-weight: 100;
+    font-size: 30px;
+    color: #666;
+    text-align: left;
+    position: fixed;
+    bottom: 36px;
+    left: 18px;
+}
+
 .verticalSlider {
-    font-family: "DIN Pro";
+    font-family: "sans-serif";
     font-weight: 100;
     font-size: 30px;
     background-color: black;
@@ -31,7 +42,7 @@ body {
     width: 100%;
 }
 .horizontalSlider {
-    font-family: "DIN Pro";
+    font-family: "sans-serif";
     font-weight: 100;
     font-size: 30px;
     background-color: darkgrey;
@@ -73,7 +84,7 @@ img#connect-leap {
 
 
 #display {
-    font-family: "DIN Pro";
+    font-family: "sans-serif";
     font-weight: 100;
     font-size: 100px;
     color: white;
@@ -87,4 +98,6 @@ img#connect-leap {
 button {
     margin: 4px 4px;
     display: block;
+    width: 124px;
+    text-align: left;
 }

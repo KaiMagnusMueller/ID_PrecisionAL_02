@@ -66,5 +66,21 @@ board.on("ready", function () {
 });
 
 function digitalScale(scaleLEDCount) {
+    digitalLED1
+    digitalLED2
+    digitalLED3
+    digitalLED4
+    digitalLED5
+    digitalLED6
+    analogLED5
+    analogLED6
+    digitalLED7
+    digitalLED8
+}
 
+function scaleRedToGreen(scaleLevel) {
+    analogLED1.brightness(Math.max(8*scaleLevel*sliderHeightScale/10, 0)) //PIN 3 = green
+    analogLED2.brightness((-25.5*scaleLevel*sliderHeightScale/10+255)) //PIN 5 = red
+    console.log("Grün: "+Math.max(8*scaleLevel*sliderHeightScale/10, 0)+
+        " Rot: "+ (-25.5*scaleLevel*sliderHeightScale/10+255))
 }

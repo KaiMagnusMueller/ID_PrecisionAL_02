@@ -6,6 +6,7 @@ var HandIn = false;
 
 var output = document.getElementById('output');
 var display = document.getElementById('display');
+var displayValue = document.getElementById('outputValue');
 
 var posThumb;
 
@@ -23,7 +24,7 @@ Leap.loop({background: true}, {
 
         var rollTest = (hand.roll()*(180/Math.PI)).toPrecision(2);
 
-        console.log(rollTest)
+        // console.log(rollTest)
 
         posThumb = hand.palmPosition[1];
 
@@ -31,13 +32,15 @@ Leap.loop({background: true}, {
         if (hand.pinchStrength <= 0.80 && pressed) {
             pressed = false;
             $("#verticalSlider").css("background-color", "black")
-            analogLED6.toggle();
+            // analogLED6.toggle();
+            setScale()
         }
 
         if (hand.pinchStrength > 0.80 && !pressed) {
             pressed = true;
             $("#verticalSlider").css("background-color", "limegreen")
-            analogLED6.toggle();
+            // analogLED6.toggle();
+            setScale()
         }
 
         // Show Volume ///////////////////////////////////////
@@ -48,7 +51,12 @@ Leap.loop({background: true}, {
         }
 
         // var range = Math.round(map(posThumb, 50, 300, 0, 100));
-        var range = Math.round(map(posThumb, 50, 300, 0, 10));
+        var range = Math.min(
+            Math.max(
+                Math.round(map(posThumb, 50, 300, 0, scaleMax))
+                , 0)
+            , scaleMax);
+
         var rangeRotation = Math.round(map(rollTest, -90, 90, 9, -9));
 
         var rangeLED = Math.round(map(posThumb, 50, 300, 0, 255));
@@ -56,16 +64,18 @@ Leap.loop({background: true}, {
         if (saveRange !== range) {
             console.log(range)
             saveRange = range;
+            scaleRedToGreen(range)
         }
         if (saveRotation !== rangeRotation) {
-            console.log(rangeRotation)
+            // console.log(rangeRotation)
             saveRotation = rangeRotation;
         }
 
+        displayValue.innerHTML = "Wert: "+range
         //fuck();
 
         // $("#verticalSlider").height(range+"%");
-        $("#verticalSlider").height(range*10+"%");
+        $("#verticalSlider").height(range*sliderHeightScale+"%");
         $("#horizontalSlider").css({"transform" : "rotate("+ rangeRotation*10 +"deg)"})
 
         // if (led.on() == true){
@@ -80,4 +90,19 @@ function rgbToHex(r, g, b) {
 
 function map(value, in_min, in_max, out_min, out_max) {
     return (value - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+var toggleScale = true
+var scaleMax = 10
+var sliderHeightScale = 10
+
+function setScale() {
+    if(toggleScale) {
+        scaleMax = 100
+        sliderHeightScale = 1
+    } else {
+        scaleMax = 10
+        sliderHeightScale = 10
+    }
+    toggleScale = !toggleScale
 }
