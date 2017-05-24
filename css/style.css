@@ -83,3 +83,8 @@ img#connect-leap {
     left: 700px;
     opacity: 0.6;
 }
+
+button {
+    margin: 4px 4px;
+    display: block;
+}

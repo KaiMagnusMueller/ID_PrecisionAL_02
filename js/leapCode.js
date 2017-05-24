@@ -31,13 +31,13 @@ Leap.loop({background: true}, {
         if (hand.pinchStrength <= 0.80 && pressed) {
             pressed = false;
             $("#verticalSlider").css("background-color", "black")
-            led.toggle();
+            analogLED6.toggle();
         }
 
         if (hand.pinchStrength > 0.80 && !pressed) {
             pressed = true;
             $("#verticalSlider").css("background-color", "limegreen")
-            led.toggle();
+            analogLED6.toggle();
         }
 
         // Show Volume ///////////////////////////////////////
