@@ -5,13 +5,12 @@ var soundOut = false;
 var HandIn = false;
 
 var output = document.getElementById('output');
-var display = document.getElementById('display');
-var displayValue = document.getElementById('outputValue');
 
 var posThumb;
 
 var saveRange = 0;
 var saveRotation = 0;
+var activeElementID = 1;
 
 // Sobald die Hand über der Leap ist, wird die Funktion ausgeführt und wiederholt
 Leap.loop({background: true}, {
@@ -19,8 +18,6 @@ Leap.loop({background: true}, {
     hand: function (hand) {
         HandIn = true;
         output.innerHTML = hand.pinchStrength.toPrecision(2);
-
-        display.innerHTML = hand.pinchStrength.toPrecision(2);
 
         var rollTest = (hand.roll()*(180/Math.PI)).toPrecision(2);
 
@@ -61,17 +58,29 @@ Leap.loop({background: true}, {
 
         var rangeLED = Math.round(map(posThumb, 50, 300, 0, 255));
 
+        // true = linear
+        // false = quadratic
+
+        if(linearOrQuadratic) {
+
+        } else {
+            range = Math.pow(range, 2)/ scaleMax
+        }
+
         if (saveRange !== range) {
             console.log(range)
             saveRange = range;
-            scaleRedToGreen(range)
+
+            if(activeElementID === 1) {scaleRedToGreen(range)}
+            if(activeElementID === 2) {vibrationMaxMin(range)}
         }
+
         if (saveRotation !== rangeRotation) {
             // console.log(rangeRotation)
             saveRotation = rangeRotation;
         }
 
-        displayValue.innerHTML = "Wert: "+range
+        // displayValue.innerHTML = "Wert: "+range
         //fuck();
 
         // $("#verticalSlider").height(range+"%");
@@ -93,8 +102,14 @@ function map(value, in_min, in_max, out_min, out_max) {
 }
 
 var toggleScale = true
+//Oberes Maximum
 var scaleMax = 10
+//Schrittgröße in Pixeln
 var sliderHeightScale = 10
+
+var linearOrQuadratic = true
+// true = linear
+// false = quadratic
 
 function setScale() {
     if(toggleScale) {
@@ -105,4 +120,23 @@ function setScale() {
         sliderHeightScale = 10
     }
     toggleScale = !toggleScale
+}
+
+function setScaleCustom() {
+    // scaleMax = ;
+
+}
+
+function setExperiment(EID) {
+    activeElementID = EID
+    console.log(activeElementID)
+}
+
+function toggleLinearQuadratic() {
+    linearOrQuadratic = !linearOrQuadratic
+    if(linearOrQuadratic) {
+        document.getElementById("ToggleLinearQuadratic").innerHTML = "Linear Scaling"
+    } else {
+        document.getElementById("ToggleLinearQuadratic").innerHTML = "Quadratic Scaling"
+    }
 }

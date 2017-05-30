@@ -81,23 +81,16 @@ img#connect-leap {
     width: 10px;
 }
 
-
-
-#display {
-    font-family: "sans-serif";
-    font-weight: 100;
-    font-size: 100px;
-    color: white;
-    text-align: left;
-    position: fixed;
-    top: 364px;
-    left: 700px;
-    opacity: 0.6;
-}
-
 button {
     margin: 4px 4px;
     display: block;
     width: 124px;
+    text-align: left;
+}
+
+input {
+    margin: 4px 4px;
+    display: block;
+    width: 119px;
     text-align: left;
 }

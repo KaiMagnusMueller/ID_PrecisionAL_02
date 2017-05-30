@@ -21,19 +21,26 @@
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-<button id="ToggleScale" onclick="setScale()">Scale 10 / 100</button>
-<button id="LEDToggle">Toggle onboard LED</button>
-<button id="E1">Toggle Experiment 1</button>
-<button id="E2">Toggle Experiment 2</button>
-<button id="E3">Toggle Experiment 3</button>
-<div id=bg></div>
-
-<div class="display" id="display"></div>
-<!--Mitte-->
 <div class="verticalSlider" id="verticalSlider"></div>
 <div class="horizontalSlider" id="horizontalSlider"></div>
+
+<button id="ToggleScale" onclick="setScale()">Scale 10 / 100</button>
+<button id="ToggleLinearQuadratic" onclick="toggleLinearQuadratic()">Linear Scaling</button>
+<div style="margin: 4px 4px; display: block; width: 119px; height: 5px"></div>
+
+<input id="ScaleInput" value="10" disabled="disabled">
+<button id="ScaleTrigger" onclick="setScaleCustom()" disabled="disabled">Set custom scale</button>
+
+<div style="margin: 4px 4px; display: block; width: 119px; height: 5px"></div>
+
+<button id="LEDToggle">Toggle LED (PIN 11)</button>
+<button id="E1" onclick="setExperiment(1)">Red / Green Scale</button>
+<button id="E2" onclick="setExperiment(2)" title="">Vibration Max / Min</button>
+<button id="E3" onclick="setExperiment(3)">Toggle Experiment 3</button>
+<div id=bg></div>
+
+<!--Mitte-->
 <p id=output class="output"></p>
-<p id=outputValue class="outputValue"></p>
 </body>
 <script src="main.js"></script>
 <script type="text/javascript" src="js/leapCode.js"></script>

@@ -83,4 +83,20 @@ function scaleRedToGreen(scaleLevel) {
     analogLED2.brightness((-25.5*scaleLevel*sliderHeightScale/10+255)) //PIN 5 = red
     console.log("Grün: "+Math.max(8*scaleLevel*sliderHeightScale/10, 0)+
         " Rot: "+ (-25.5*scaleLevel*sliderHeightScale/10+255))
+
+}
+
+function vibrationMaxMin(scaleLevel) {
+    if (scaleLevel === 0 || scaleLevel === scaleMax) {
+        console.log("trigger" + scaleLevel + " " + scaleMax)
+
+        setTimeout(function(){analogLED1.on()}, 50);
+        setTimeout(function(){analogLED1.off()}, 100);
+        setTimeout(function(){analogLED1.on()}, 150);
+        setTimeout(function(){analogLED1.off()}, 200);
+        setTimeout(function(){analogLED1.on()}, 250);
+        setTimeout(function(){analogLED1.off()}, 300);
+    }
+    setTimeout(function(){analogLED1.on()}, 50);
+    setTimeout(function(){analogLED1.off()}, 100);
 }
