@@ -30,14 +30,14 @@ Leap.loop({background: true}, {
             pressed = false;
             $("#verticalSlider").css("background-color", "black")
             // analogLED6.toggle();
-            setScale()
+            // setScale()
         }
 
         if (hand.pinchStrength > 0.80 && !pressed) {
             pressed = true;
             $("#verticalSlider").css("background-color", "limegreen")
             // analogLED6.toggle();
-            setScale()
+            // setScale()
         }
 
         // Show Volume ///////////////////////////////////////
@@ -68,7 +68,7 @@ Leap.loop({background: true}, {
         }
 
         if (saveRange !== range) {
-            console.log(range)
+            console.log("Aktuell:"+range)
             saveRange = range;
 
             if(activeElementID === 1) {scaleRedToGreen(range)}
@@ -84,7 +84,7 @@ Leap.loop({background: true}, {
         //fuck();
 
         // $("#verticalSlider").height(range+"%");
-        $("#verticalSlider").height(range*sliderHeightScale+"%");
+        $("#verticalSlider").height(range*stepPercent+"%");
         $("#horizontalSlider").css({"transform" : "rotate("+ rangeRotation*10 +"deg)"})
 
         // if (led.on() == true){
@@ -105,7 +105,7 @@ var toggleScale = true
 //Oberes Maximum
 var scaleMax = 10
 //Schrittgröße in Pixeln
-var sliderHeightScale = 10
+var stepPercent = 10
 
 var linearOrQuadratic = true
 // true = linear
@@ -114,22 +114,28 @@ var linearOrQuadratic = true
 function setScale() {
     if(toggleScale) {
         scaleMax = 100
-        sliderHeightScale = 1
+        stepPercent = 1
+        console.log("scaleMax: "+scaleMax+" stepPercent: "+stepPercent)
+
     } else {
         scaleMax = 10
-        sliderHeightScale = 10
+        stepPercent = 10
+        console.log("scaleMax: "+scaleMax+" stepPercent: "+stepPercent)
+
     }
     toggleScale = !toggleScale
 }
 
 function setScaleCustom() {
-    // scaleMax = ;
+    scaleMax = document.getElementById("ScaleInput").value;
+    stepPercent = 100 / scaleMax
+    console.log("scaleMax: "+scaleMax+" stepPercent: "+stepPercent)
 
 }
 
 function setExperiment(EID) {
     activeElementID = EID
-    console.log(activeElementID)
+    console.log("Experiment: "+activeElementID)
 }
 
 function toggleLinearQuadratic() {

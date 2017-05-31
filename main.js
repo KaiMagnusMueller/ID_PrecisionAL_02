@@ -79,24 +79,32 @@ function digitalScale(scaleLEDCount) {
 }
 
 function scaleRedToGreen(scaleLevel) {
-    analogLED1.brightness(Math.max(8*scaleLevel*sliderHeightScale/10, 0)) //PIN 3 = green
-    analogLED2.brightness((-25.5*scaleLevel*sliderHeightScale/10+255)) //PIN 5 = red
-    console.log("Grün: "+Math.max(8*scaleLevel*sliderHeightScale/10, 0)+
-        " Rot: "+ (-25.5*scaleLevel*sliderHeightScale/10+255))
-
+    //PIN 3 green, 5 red
+    analogLED1.brightness(Math.max(8*scaleLevel*stepPercent/10, 0)) //PIN 3 = green
+    analogLED2.brightness((-25.5*scaleLevel*stepPercent/10+255)) //PIN 5 = red
+    console.log("Grün: "+Math.max(8*scaleLevel*stepPercent/10, 0)+
+        " Rot: "+ (-25.5*scaleLevel*stepPercent/10+255))
 }
 
 function vibrationMaxMin(scaleLevel) {
-    if (scaleLevel === 0 || scaleLevel === scaleMax) {
-        console.log("trigger" + scaleLevel + " " + scaleMax)
 
-        setTimeout(function(){analogLED1.on()}, 50);
-        setTimeout(function(){analogLED1.off()}, 100);
-        setTimeout(function(){analogLED1.on()}, 150);
-        setTimeout(function(){analogLED1.off()}, 200);
-        setTimeout(function(){analogLED1.on()}, 250);
-        setTimeout(function(){analogLED1.off()}, 300);
+    //PIN 3
+    console.log("scaleLevel: " + scaleLevel + " scaleMax: " + scaleMax)
+    if (scaleLevel === 0 || scaleLevel >= scaleMax) {
+        console.log("Max/Min")
+
+        setTimeout(function(){analogLED3.on()}, 50);
+        setTimeout(function(){analogLED3.off()}, 100);
+        // setTimeout(function(){analogLED3.on()}, 500);
+        // setTimeout(function(){analogLED3.off()}, 550);
+        // setTimeout(function(){analogLED3.on()}, 950);
+        // setTimeout(function(){analogLED3.off()}, 1000);
+    } else {
+        setTimeout(function(){analogLED3.on()
+            // console.log("test"+scaleMax)
+            }, 30);
+        setTimeout(function(){analogLED3.off()
+            // console.log("test"+scaleMax)
+            }, 60);
     }
-    setTimeout(function(){analogLED1.on()}, 50);
-    setTimeout(function(){analogLED1.off()}, 100);
 }
