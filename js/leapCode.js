@@ -73,6 +73,7 @@ Leap.loop({background: true}, {
 
             if(activeElementID === 1) {scaleRedToGreen(range)}
             if(activeElementID === 2) {vibrationMaxMin(range)}
+            if(activeElementID === 3) {vibrationNoMaxMin(range)}
         }
 
         if (saveRotation !== rangeRotation) {
@@ -145,4 +146,11 @@ function toggleLinearQuadratic() {
     } else {
         document.getElementById("ToggleLinearQuadratic").innerHTML = "Quadratic Scaling"
     }
+}
+
+var nvMS = 35;
+
+function setVStrength(vStrength) {
+    nvMS = vStrength
+    console.log("nvMS: "+nvMS)
 }

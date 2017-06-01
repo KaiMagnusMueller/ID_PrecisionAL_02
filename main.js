@@ -89,22 +89,35 @@ function scaleRedToGreen(scaleLevel) {
 function vibrationMaxMin(scaleLevel) {
 
     //PIN 3
-    console.log("scaleLevel: " + scaleLevel + " scaleMax: " + scaleMax)
+    // console.log("scaleLevel: " + scaleLevel + " scaleMax: " + scaleMax)
     if (scaleLevel === 0 || scaleLevel >= scaleMax) {
         console.log("Max/Min")
 
-        setTimeout(function(){analogLED3.on()}, 50);
-        setTimeout(function(){analogLED3.off()}, 100);
+        setTimeout(function(){
+            digitalLED5.on()}, 50);
+        setTimeout(function(){digitalLED5.off()}, 100);
         // setTimeout(function(){analogLED3.on()}, 500);
         // setTimeout(function(){analogLED3.off()}, 550);
         // setTimeout(function(){analogLED3.on()}, 950);
         // setTimeout(function(){analogLED3.off()}, 1000);
     } else {
-        setTimeout(function(){analogLED3.on()
+        setTimeout(function(){digitalLED5.on()
             // console.log("test"+scaleMax)
-            }, 30);
-        setTimeout(function(){analogLED3.off()
+            }, nvMS);
+        setTimeout(function(){digitalLED5.off()
             // console.log("test"+scaleMax)
-            }, 60);
+            }, nvMS*2);
     }
+}
+
+function vibrationNoMaxMin(scaleLevel) {
+
+    //PIN 3
+    // console.log("scaleLevel: " + scaleLevel + " scaleMax: " + scaleMax)
+        setTimeout(function(){digitalLED5.on()
+            // console.log("test"+scaleMax)
+        }, nvMS);
+        setTimeout(function(){digitalLED5.off()
+            // console.log("test"+scaleMax)
+        }, nvMS*2);
 }

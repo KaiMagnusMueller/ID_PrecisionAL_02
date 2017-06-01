@@ -28,16 +28,21 @@
 <button id="ToggleLinearQuadratic" onclick="toggleLinearQuadratic()">Linear Scaling</button>
 <div style="margin: 4px 4px; display: block; width: 119px; height: 5px"></div>
 
-<input id="ScaleInput" value="10">
+<input id="ScaleInput" value="10" onkeydown = "if (event.keyCode === 13) document.getElementById('ScaleTrigger').click()">
+
 <button id="ScaleTrigger" onclick="setScaleCustom()">Set custom scale</button>
 
 <div style="margin: 4px 4px; display: block; width: 119px; height: 5px"></div>
 
 <button id="LEDToggle">Toggle LED (PIN 11)</button>
 <button id="E1" onclick="setExperiment(1)">Red / Green Scale</button>
+<div style="margin: 4px 4px; display: block; width: 119px; height: 5px"></div>
 <button id="E2" onclick="setExperiment(2)" title="">Vibration Max / Min</button>
-<button id="E3" onclick="setExperiment(3)">Toggle Experiment 3</button>
-<div id=bg></div>
+<button id="E3" onclick="setExperiment(3)">Vibration</button>
+<button onclick="setVStrength(30)">30 MS</button>
+<button onclick="setVStrength(35)">35 MS</button>
+<button onclick="setVStrength(40)">40 MS</button>
+<!--<div id=bg></div>-->
 
 <!--Mitte-->
 <p id=output class="output"></p>
