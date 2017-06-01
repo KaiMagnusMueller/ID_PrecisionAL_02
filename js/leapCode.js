@@ -74,6 +74,8 @@ Leap.loop({background: true}, {
             if(activeElementID === 1) {scaleRedToGreen(range)}
             if(activeElementID === 2) {vibrationMaxMin(range)}
             if(activeElementID === 3) {vibrationNoMaxMin(range)}
+            if(activeElementID === 4) {vibrationMaxMinCombined(range)}
+
         }
 
         if (saveRotation !== rangeRotation) {
@@ -137,6 +139,8 @@ function setScaleCustom() {
 function setExperiment(EID) {
     activeElementID = EID
     console.log("Experiment: "+activeElementID)
+    analogLED1.off()
+    analogLED2.off()
 }
 
 function toggleLinearQuadratic() {

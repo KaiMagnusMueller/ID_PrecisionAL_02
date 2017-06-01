@@ -121,3 +121,33 @@ function vibrationNoMaxMin(scaleLevel) {
             // console.log("test"+scaleMax)
         }, nvMS*2);
 }
+
+function vibrationMaxMinCombined(scaleLevel) {
+
+    //PIN 3 green, 5 red
+    analogLED1.brightness(Math.max(8*scaleLevel*stepPercent/10, 0)) //PIN 3 = green
+    analogLED2.brightness((-25.5*scaleLevel*stepPercent/10+255)) //PIN 5 = red
+    console.log("Grün: "+Math.max(8*scaleLevel*stepPercent/10, 0)+
+        " Rot: "+ (-25.5*scaleLevel*stepPercent/10+255))
+
+    //PIN 3
+    // console.log("scaleLevel: " + scaleLevel + " scaleMax: " + scaleMax)
+    if (scaleLevel === 0 || scaleLevel >= scaleMax) {
+        console.log("Max/Min")
+
+        setTimeout(function(){
+            digitalLED5.on()}, 50);
+        setTimeout(function(){digitalLED5.off()}, 100);
+        // setTimeout(function(){analogLED3.on()}, 500);
+        // setTimeout(function(){analogLED3.off()}, 550);
+        // setTimeout(function(){analogLED3.on()}, 950);
+        // setTimeout(function(){analogLED3.off()}, 1000);
+    } else {
+        setTimeout(function(){digitalLED5.on()
+            // console.log("test"+scaleMax)
+        }, nvMS);
+        setTimeout(function(){digitalLED5.off()
+            // console.log("test"+scaleMax)
+        }, nvMS*2);
+    }
+}
