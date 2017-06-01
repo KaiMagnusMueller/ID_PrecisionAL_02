@@ -59,10 +59,10 @@ board.on("ready", function () {
 
 
 
-    // toggle onboard led using button element
-    $('button').on('click', function () {
-        analogLED6.toggle();
-    });
+    // // toggle onboard led using button element
+    // $('button').on('click', function () {
+    //     analogLED6.toggle();
+    // });
 });
 
 function digitalScale(scaleLEDCount) {
@@ -88,7 +88,7 @@ function scaleRedToGreen(scaleLevel) {
 
 function vibrationMaxMin(scaleLevel) {
 
-    //PIN 3
+    //PIN 7 DIGITAL LED
     // console.log("scaleLevel: " + scaleLevel + " scaleMax: " + scaleMax)
     if (scaleLevel === 0 || scaleLevel >= scaleMax) {
         console.log("Max/Min")
@@ -97,7 +97,7 @@ function vibrationMaxMin(scaleLevel) {
             digitalLED5.on()}, 50);
         setTimeout(function(){digitalLED5.off()}, 100);
         // setTimeout(function(){analogLED3.on()}, 500);
-        // setTimeout(function(){analogLED3.off()}, 550);
+        // setTimgeout(function(){analogLED3.off()}, 550);
         // setTimeout(function(){analogLED3.on()}, 950);
         // setTimeout(function(){analogLED3.off()}, 1000);
     } else {
@@ -112,7 +112,7 @@ function vibrationMaxMin(scaleLevel) {
 
 function vibrationNoMaxMin(scaleLevel) {
 
-    //PIN 3
+    //PIN 7
     // console.log("scaleLevel: " + scaleLevel + " scaleMax: " + scaleMax)
         setTimeout(function(){digitalLED5.on()
             // console.log("test"+scaleMax)
@@ -130,7 +130,7 @@ function vibrationMaxMinCombined(scaleLevel) {
     console.log("Grün: "+Math.max(8*scaleLevel*stepPercent/10, 0)+
         " Rot: "+ (-25.5*scaleLevel*stepPercent/10+255))
 
-    //PIN 3
+    //PIN 7 digital led
     // console.log("scaleLevel: " + scaleLevel + " scaleMax: " + scaleMax)
     if (scaleLevel === 0 || scaleLevel >= scaleMax) {
         console.log("Max/Min")
