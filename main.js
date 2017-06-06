@@ -151,3 +151,30 @@ function vibrationMaxMinCombined(scaleLevel) {
         }, nvMS*2);
     }
 }
+
+function nonUnteractiveExperments(exp) {
+
+    if(exp === 1) {
+        analogLED3.pulse({
+            easing: "inOutSine",
+            duration: 3500,
+            cuePoints: [0, 1],
+            keyFrames: [5, 100],
+            // onstop: function() {
+            //     this.wait(2000, function () {
+            //     })
+            // }
+        })
+    }
+    if(exp === 2) {
+        analogLED3.stop()
+        analogLED3.brightness(100)
+    }
+    if(exp === 3) {
+        analogLED3.stop()
+        setTimeout(function(){analogLED3.brightness(100)}, 200);
+        setTimeout(function(){analogLED3.brightness(0)}, 250);
+        setTimeout(function(){analogLED3.brightness(100)}, 450);
+        setTimeout(function(){analogLED3.brightness(0)}, 600);
+    }
+}

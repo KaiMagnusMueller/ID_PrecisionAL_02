@@ -75,6 +75,8 @@ Leap.loop({background: true}, {
             if(activeElementID === 2) {vibrationMaxMin(range)}
             if(activeElementID === 3) {vibrationNoMaxMin(range)}
             if(activeElementID === 4) {vibrationMaxMinCombined(range)}
+            // if(activeElementID === 5) {fadeInOut()}
+
 
         }
 
