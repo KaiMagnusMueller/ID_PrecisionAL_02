@@ -75,7 +75,10 @@ Leap.loop({background: true}, {
             if(activeElementID === 2) {vibrationMaxMin(range)}
             if(activeElementID === 3) {vibrationNoMaxMin(range)}
             if(activeElementID === 4) {vibrationMaxMinCombined(range)}
-            // if(activeElementID === 5) {fadeInOut()}
+            if(activeElementID === 5) {scaleBlackWhite(range)}
+            if(activeElementID === 6) {stepsBlackWhite(range)}
+            if(activeElementID === 7) {blinkBlackWhite(range)}
+            if(activeElementID === 8) {rowBlackWhite(range)}
 
 
         }
@@ -143,6 +146,7 @@ function setExperiment(EID) {
     console.log("Experiment: "+activeElementID)
     analogLED1.off()
     analogLED2.off()
+    analogLED3.stop()
 }
 
 function toggleLinearQuadratic() {

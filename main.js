@@ -152,7 +152,7 @@ function vibrationMaxMinCombined(scaleLevel) {
     }
 }
 
-function nonUnteractiveExperments(exp) {
+function nonInteractiveExperiments(exp) {
 
     if(exp === 1) {
         analogLED3.pulse({
@@ -177,4 +177,38 @@ function nonUnteractiveExperments(exp) {
         setTimeout(function(){analogLED3.brightness(100)}, 450);
         setTimeout(function(){analogLED3.brightness(0)}, 600);
     }
+}
+
+function scaleBlackWhite(scaleLevel) {
+    //PIN 6
+    analogLED3.brightness(Math.max(9.5*scaleLevel*stepPercent/10+5, 0)) //PIN 3 = green
+
+}
+
+function stepsBlackWhite(scaleLevel) {
+    //PIN 6
+    analogLED3.brightness(Math.max(8*scaleLevel*stepPercent/10+3, 0))
+
+    setTimeout(function(){analogLED3.off()}, 100);
+}
+
+function blinkBlackWhite(scaleLevel) {
+    //PIN 6
+    //Widerstand dazwischenschalten
+    analogLED3.blink(-70*scaleLevel*stepPercent/10+800)
+//    Math.max(3*scaleLevel*stepPercent/10+3, 0)
+
+}
+
+function rowBlackWhite(scaleLevel) {
+    //PIN 3, 5, 6, 9
+    var stepInternal = scaleLevel*stepPercent/10
+    console.log(stepInternal)
+
+    if(stepInternal > 1.25){analogLED1.brightness(10)} else {analogLED1.off()}
+    if(stepInternal > 3.75){analogLED2.brightness(10)} else {analogLED2.off()}
+    if(stepInternal > 6.25){analogLED3.brightness(10)} else {analogLED3.off()}
+    if(stepInternal > 8.75){analogLED4.brightness(10)} else {analogLED4.off()}
+
+//    Math.max(3*scaleLevel*stepPercent/10+3, 0)
 }
