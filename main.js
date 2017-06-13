@@ -80,7 +80,7 @@ function digitalScale(scaleLEDCount) {
 
 function scaleRedToGreen(scaleLevel) {
     //PIN 3 green, 5 red
-    analogLED1.brightness(Math.max(8*scaleLevel*stepPercent/10, 0)) //PIN 3 = green
+    analogLED1.brightness(Math.max(6*scaleLevel*stepPercent/10, 0)) //PIN 3 = green
     analogLED2.brightness((-25.5*scaleLevel*stepPercent/10+255)) //PIN 5 = red
     console.log("Grün: "+Math.max(8*scaleLevel*stepPercent/10, 0)+
         " Rot: "+ (-25.5*scaleLevel*stepPercent/10+255))
@@ -94,19 +94,26 @@ function vibrationMaxMin(scaleLevel) {
         console.log("Max/Min")
 
         setTimeout(function(){
-            digitalLED5.on()}, 50);
-        setTimeout(function(){digitalLED5.off()}, 100);
+            digitalLED5.on()}, 0);
+        setTimeout(function(){digitalLED5.off()}, 50);
         // setTimeout(function(){analogLED3.on()}, 500);
-        // setTimgeout(function(){analogLED3.off()}, 550);
+        // setTimeout(function(){analogLED3.off()}, 550);
         // setTimeout(function(){analogLED3.on()}, 950);
         // setTimeout(function(){analogLED3.off()}, 1000);
+    } else if (varB){
+        setTimeout(function(){digitalLED5.on()
+            // console.log("test"+scaleMax)
+            }, 0);
+        setTimeout(function(){digitalLED5.off()
+            // console.log("test"+scaleMax)
+            }, 1.25*scaleLevel*stepPercent/10+28.75);
     } else {
         setTimeout(function(){digitalLED5.on()
             // console.log("test"+scaleMax)
-            }, nvMS);
+        }, 0);
         setTimeout(function(){digitalLED5.off()
             // console.log("test"+scaleMax)
-            }, nvMS*2);
+        }, nvMS);
     }
 }
 
@@ -187,7 +194,9 @@ function scaleBlackWhite(scaleLevel) {
 
 function stepsBlackWhite(scaleLevel) {
     //PIN 6
-    analogLED3.brightness(Math.max(8*scaleLevel*stepPercent/10+3, 0))
+    if (varB){analogLED3.brightness(Math.max(8*scaleLevel*stepPercent/10+3, 0))} else {
+        analogLED3.brightness(80)
+    }
 
     setTimeout(function(){analogLED3.off()}, 100);
 }
@@ -205,10 +214,14 @@ function rowBlackWhite(scaleLevel) {
     var stepInternal = scaleLevel*stepPercent/10
     console.log(stepInternal)
 
-    if(stepInternal > 1.25){analogLED1.brightness(10)} else {analogLED1.off()}
-    if(stepInternal > 3.75){analogLED2.brightness(10)} else {analogLED2.off()}
-    if(stepInternal > 6.25){analogLED3.brightness(10)} else {analogLED3.off()}
-    if(stepInternal > 8.75){analogLED4.brightness(10)} else {analogLED4.off()}
+    if(stepInternal > 1.25){analogLED1.brightness(5)} else {analogLED1.off()}
+    if(stepInternal > 3.75){analogLED2.brightness(5)} else {analogLED2.off()}
+    if(stepInternal > 6.25){analogLED3.brightness(5)} else {analogLED3.off()}
+    if(stepInternal > 8.75){analogLED4.brightness(5)} else {analogLED4.off()}
 
 //    Math.max(3*scaleLevel*stepPercent/10+3, 0)
+}
+
+function windowApp(scaleLevel){
+    console.log(scaleLevel)
 }

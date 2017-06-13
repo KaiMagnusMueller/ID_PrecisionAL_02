@@ -11,6 +11,10 @@ var posThumb;
 var saveRange = 0;
 var saveRotation = 0;
 var activeElementID = 1;
+console.log("Gerät im Standby")
+
+var waitingForUser = true
+
 
 // Sobald die Hand über der Leap ist, wird die Funktion ausgeführt und wiederholt
 Leap.loop({background: true}, {
@@ -24,6 +28,7 @@ Leap.loop({background: true}, {
         // console.log(rollTest)
 
         posThumb = hand.palmPosition[1];
+        // console.log("palmPos2: "+hand.palmPosition[2])
 
         // Tap Funktion ///////////////////////////////////////
         if (hand.pinchStrength <= 0.80 && pressed) {
@@ -47,6 +52,17 @@ Leap.loop({background: true}, {
         if (hand.pinchStrength < 0.80) {
         }
 
+        //Setze waitingForUser nur dann false wenn die hand unter 230mm enfernt ist
+        // und WinApp aktiv ist
+        // waitingForUser false sorgt dann weiter unten für die ausführung des Experiments
+        if (hand.palmPosition[2] < 230 && waitingForUser && toggleWinApp) {
+            waitingForUser = false
+            console.log("Warte auf eingabe")
+        } else if (hand.palmPosition[2] > 230 && !waitingForUser){
+            waitingForUser = true
+            console.log("Gerät im Standby")
+        }
+
         // var range = Math.round(map(posThumb, 50, 300, 0, 100));
         var range = Math.min(
             Math.max(
@@ -68,7 +84,7 @@ Leap.loop({background: true}, {
         }
 
         if (saveRange !== range) {
-            console.log("Aktuell:"+range)
+            // console.log("Aktuell:"+range)
             saveRange = range;
 
             if(activeElementID === 1) {scaleRedToGreen(range)}
@@ -79,7 +95,8 @@ Leap.loop({background: true}, {
             if(activeElementID === 6) {stepsBlackWhite(range)}
             if(activeElementID === 7) {blinkBlackWhite(range)}
             if(activeElementID === 8) {rowBlackWhite(range)}
-
+            //Führe Experiment nur dann aus wenn waitingForUser false, also WinApp aktiv ist
+            if(activeElementID === 9 && !waitingForUser) {windowApp(range)}
 
         }
 
@@ -144,9 +161,9 @@ function setScaleCustom() {
 function setExperiment(EID) {
     activeElementID = EID
     console.log("Experiment: "+activeElementID)
-    analogLED1.off()
-    analogLED2.off()
-    analogLED3.stop()
+    // analogLED1.off()
+    // analogLED2.off()
+    // analogLED3.stop()
 }
 
 function toggleLinearQuadratic() {
@@ -163,4 +180,25 @@ var nvMS = 35;
 function setVStrength(vStrength) {
     nvMS = vStrength
     console.log("nvMS: "+nvMS)
+}
+
+var varB = true
+function varBrightness() {
+    varB = !varB
+    if (varB){console.log("var on")} else {
+        console.log("var off")
+    }
+}
+
+var toggleWinApp = false
+function toggleWindowApplication() {
+    toggleWinApp = !toggleWinApp
+    if(toggleWinApp){
+        for(let el of document.querySelectorAll('.legacy')) el.style.display = 'none'
+        for(let el of document.querySelectorAll('.windowApplication')) el.style.display = 'block'
+    } else {
+        waitingForUser = true
+        for(let el of document.querySelectorAll('.legacy')) el.style.display = 'block'
+        for(let el of document.querySelectorAll('.windowApplication')) el.style.display = 'none'
+    }
 }
