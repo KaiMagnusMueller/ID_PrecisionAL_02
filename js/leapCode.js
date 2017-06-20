@@ -14,10 +14,13 @@ var activeElementID = 1;
 console.log("Gerät im Standby")
 
 var waitingForUser = true
-
+var range = 5
+var winPulseStartOnce = true
+var freezeValue = false
+var savedValue = 5
 
 // Sobald die Hand über der Leap ist, wird die Funktion ausgeführt und wiederholt
-Leap.loop({background: true}, {
+Leap.loop({background: true, frameEventName: 'animationFrame'}, {
 
     hand: function (hand) {
         HandIn = true;
@@ -30,41 +33,8 @@ Leap.loop({background: true}, {
         posThumb = hand.palmPosition[1];
         // console.log("palmPos2: "+hand.palmPosition[2])
 
-        // Tap Funktion ///////////////////////////////////////
-        if (hand.pinchStrength <= 0.80 && pressed) {
-            pressed = false;
-            $("#verticalSlider").css("background-color", "black")
-            // analogLED6.toggle();
-            // setScale()
-        }
-
-        if (hand.pinchStrength > 0.80 && !pressed) {
-            pressed = true;
-            $("#verticalSlider").css("background-color", "limegreen")
-            // analogLED6.toggle();
-            // setScale()
-        }
-
-        // Show Volume ///////////////////////////////////////
-        if (hand.pinchStrength > 0.80) {
-        }
-
-        if (hand.pinchStrength < 0.80) {
-        }
-
-        //Setze waitingForUser nur dann false wenn die hand unter 230mm enfernt ist
-        // und WinApp aktiv ist
-        // waitingForUser false sorgt dann weiter unten für die ausführung des Experiments
-        if (hand.palmPosition[2] < 230 && waitingForUser && toggleWinApp) {
-            waitingForUser = false
-            console.log("Warte auf eingabe")
-        } else if (hand.palmPosition[2] > 230 && !waitingForUser){
-            waitingForUser = true
-            console.log("Gerät im Standby")
-        }
-
         // var range = Math.round(map(posThumb, 50, 300, 0, 100));
-        var range = Math.min(
+        range = Math.min(
             Math.max(
                 Math.round(map(posThumb, 50, 300, 0, scaleMax))
                 , 0)
@@ -83,20 +53,101 @@ Leap.loop({background: true}, {
             range = Math.pow(range, 2)/ scaleMax
         }
 
+        // Tap Funktion ///////////////////////////////////////
+        // if (hand.pinchStrength <= 0.80 && pressed) {
+        //     pressed = false;
+        //     $("#verticalSlider").css("background-color", "black")
+        //     // analogLED6.toggle();
+        //     // setScale()
+        //     windowAppConfirm(range)
+        // }
+        //
+        // if (hand.pinchStrength > 0.80 && !pressed) {
+        //     pressed = true;
+        //     $("#verticalSlider").css("background-color", "limegreen")
+        //     // analogLED6.toggle();
+        //     // setScale()
+        // }
+
+        // Show Volume ///////////////////////////////////////
+        // if (hand.pinchStrength > 0.80) {
+        // }
+        //
+        // if (hand.pinchStrength < 0.80) {
+        // }
+
+        //Setze waitingForUser nur dann false wenn die hand unter 150mm enfernt ist
+        // und WinApp aktiv ist
+        // waitingForUser false sorgt dann weiter unten für die ausführung des Experiments
+        if (hand.palmPosition[2] < 150 && waitingForUser && toggleWinApp) {
+            waitingForUser = false
+            console.log("Warte auf eingabe")
+        } else if (hand.palmPosition[2] > 150 && !waitingForUser){
+            waitingForUser = true
+            winPulseStartOnce = true
+            freezeValue = false
+
+            console.log("Gerät im Standby")
+        }
+
+        if (winPulseStartOnce) {
+            winPulseStartOnce = !winPulseStartOnce
+            winPulse(savedValue)
+        }
+
+        //Confirm Value
+        if (hand.pinchStrength <= 0.80 && pressed) {
+            pressed = false;
+            $("#verticalSlider").css("background-color", "black")
+            windowApp(range, true)
+            freezeValue = false
+        }
+
+        if (hand.pinchStrength > 0.80 && !pressed) {
+            pressed = true;
+            $("#verticalSlider").css("background-color", "limegreen")
+            windowAppConfirm(range)
+            savedValue = range
+            console.log("Value saved: "+ savedValue)
+            freezeValue = true
+        }
+
         if (saveRange !== range) {
             // console.log("Aktuell:"+range)
             saveRange = range;
 
-            if(activeElementID === 1) {scaleRedToGreen(range)}
-            if(activeElementID === 2) {vibrationMaxMin(range)}
-            if(activeElementID === 3) {vibrationNoMaxMin(range)}
-            if(activeElementID === 4) {vibrationMaxMinCombined(range)}
-            if(activeElementID === 5) {scaleBlackWhite(range)}
-            if(activeElementID === 6) {stepsBlackWhite(range)}
-            if(activeElementID === 7) {blinkBlackWhite(range)}
-            if(activeElementID === 8) {rowBlackWhite(range)}
+            switch(activeElementID) {
+                case 1:
+                    scaleRedToGreen(range)
+                    break
+                case 2:
+                    vibrationMaxMinCombined(range)
+                    break
+                case 3:
+                    vibrationNoMaxMin(range)
+                    break
+                case 4:
+                    vibrationMaxMinCombined(range)
+                    break
+                case 5:
+                    scaleBlackWhite(range)
+                    break
+                case 6:
+                    stepsBlackWhite(range)
+                    break
+                case 7:
+                    blinkBlackWhite(range)
+                    break
+                case 8:
+                    rowBlackWhite(range)
+            }
             //Führe Experiment nur dann aus wenn waitingForUser false, also WinApp aktiv ist
-            if(activeElementID === 9 && !waitingForUser) {windowApp(range)}
+            //und die hand im Bereich ist
+            if(activeElementID === 9 && !waitingForUser && !freezeValue) {
+                windowApp(range, false)
+                $("#verticalSlider").height(range*stepPercent+"%");
+                $("#horizontalSlider").css({"transform" : "rotate("+ rangeRotation*10 +"deg)"})
+            }
 
         }
 
@@ -109,9 +160,10 @@ Leap.loop({background: true}, {
         //fuck();
 
         // $("#verticalSlider").height(range+"%");
-        $("#verticalSlider").height(range*stepPercent+"%");
-        $("#horizontalSlider").css({"transform" : "rotate("+ rangeRotation*10 +"deg)"})
-
+        if (activeElementID !== 9) {
+            $("#verticalSlider").height(range*stepPercent+"%");
+            $("#horizontalSlider").css({"transform" : "rotate("+ rangeRotation*10 +"deg)"})
+        }
         // if (led.on() == true){
         //     led.brightness(rangeLED);
         // }
