@@ -233,10 +233,6 @@ function windowApp(scaleLevel, confirmed){
     if (scaleLevel === 0 || scaleLevel >= scaleMax && !confirmed) {
         console.log("Max/Min")
 
-        // setTimeout(function () {
-        //     analogLED1.brightness(bLED[0]) //PIN 3 = green
-        //     analogLED2.brightness(bLED[1]) //PIN 5 = red
-        // }, 150);
         setTimeout(function () {
             analogLED1.brightness(bLED[0]/3) //PIN 3 = green
             analogLED2.brightness(bLED[1]/5) //PIN 5 = red
@@ -259,24 +255,7 @@ function windowApp(scaleLevel, confirmed){
 
 //Standby brightness (former standby pulse)
 function winPulse(scaleLevel) {
-    analogLED1.stop()
-    analogLED2.stop()
     var bLED = getLEDBr(scaleLevel)
-
-
-    // analogLED1.pulse({
-    //     easing: "inOutSine",
-    //     duration: 3500,
-    //     cuePoints: [0, 1],
-    //     keyFrames: [5, Math.max(6*scaleLevel*stepPercent/10, 0)],
-    // })
-    //
-    // analogLED2.pulse({
-    //     easing: "inOutSine",
-    //     duration: 3500,
-    //     cuePoints: [0, 1],
-    //     keyFrames: [5, -25.5*scaleLevel*stepPercent/10+255],
-    // })
 
     console.log(scaleLevel)
     analogLED1.brightness(bLED[0]/3) //PIN 3 = green
