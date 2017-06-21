@@ -226,6 +226,16 @@ function windowApp(scaleLevel, confirmed){
 
     var bLED = getLEDBr(scaleLevel)
 
+    //MOTOR PIN 9 0,
+    var fanSpeed = function () {
+        var fanSpeed = map(scaleLevel, 0, scaleMax, 40, 255)
+        if(fanSpeed === 40) {fanSpeed = 0}
+        return fanSpeed
+    }
+
+    analogLED4.brightness(fanSpeed())
+    console.log(fanSpeed())
+
     console.log("current: "+ scaleLevel)
     analogLED1.brightness(bLED[0]) //PIN 3 = green
     analogLED2.brightness(bLED[1]) //PIN 5 = red
@@ -242,6 +252,7 @@ function windowApp(scaleLevel, confirmed){
             analogLED2.brightness(bLED[1]) //PIN 5 = red
         }, 300)
         setTimeout(function () {
+
             analogLED1.brightness(bLED[0]/3) //PIN 3 = green
             analogLED2.brightness(bLED[1]/5) //PIN 5 = red
         }, 450)
@@ -256,6 +267,15 @@ function windowApp(scaleLevel, confirmed){
 //Standby brightness (former standby pulse)
 function winPulse(scaleLevel) {
     var bLED = getLEDBr(scaleLevel)
+
+    var fanSpeed = function () {
+        var fanSpeed = map(scaleLevel, 0, scaleMax, 40, 255)
+        if(fanSpeed === 40) {fanSpeed = 0}
+        return fanSpeed
+    }
+
+    analogLED4.brightness(fanSpeed())
+    console.log(fanSpeed()+" reset")
 
     console.log(scaleLevel)
     analogLED1.brightness(bLED[0]/3) //PIN 3 = green
@@ -277,7 +297,7 @@ function getLEDBr(scaleLevel) {
     bLED[0] = Math.max(6 * scaleLevel * stepPercent / 10, 0)
     bLED[1] = -25.5 * scaleLevel * stepPercent / 10 + 255
 
-    console.log("Grün: "+bLED[0]+" Rot: "+ bLED[1])
+    // console.log("Grün: "+bLED[0]+" Rot: "+ bLED[1])
     return bLED
 
 
