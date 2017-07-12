@@ -24,7 +24,18 @@
 <div class="legacy, verticalSlider" id="verticalSlider"></div>
 <div class="legacy, horizontalSlider" id="horizontalSlider"></div>
 
-<button class="windowApplication" id="E12" onclick="setExperiment(9)">Fenster App</button>
+<button class="windowApplication" id="E12" onclick="setApplication(1)">Ventilator App (1)</button>
+<button class="windowApplication" id="E13" onclick="setApplication(2)">Automat App (2)</button>
+<button class="windowApplication" id="E14" onclick="
+    waitingForUser = true
+    range = 5
+    winPulseStartOnce = true
+    freezeValue = false
+    savedValue = 5
+    console.log('reset')
+    $('#verticalSlider').height(range*stepPercent+'%').css('background-color', 'black')
+    console.log('Gerät im Standby')
+">Reset</button>
 
 <!--<div id=bg></div>-->
 

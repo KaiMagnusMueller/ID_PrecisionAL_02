@@ -19,6 +19,11 @@ var winPulseStartOnce = true
 var freezeValue = false
 var savedValue = 5
 
+//Ventilator oder Automat
+var app = 2
+var dontActivate = false
+
+
 // Sobald die Hand über der Leap ist, wird die Funktion ausgeführt und wiederholt
 Leap.loop({background: true, frameEventName: 'animationFrame'}, {
 
@@ -30,11 +35,15 @@ Leap.loop({background: true, frameEventName: 'animationFrame'}, {
 
         posThumb = hand.palmPosition[1];
 
-        range = Math.min(
+        if(app === 1){
+            range = Math.min(
             Math.max(
                 Math.round(map(posThumb, 50, 300, 0, scaleMax))
                 , 0)
-            , scaleMax);
+            , scaleMax);}
+
+        if(app === 2){range = scaleMax}
+
 
         var rangeRotation = Math.round(map(rollTest, -90, 90, 9, -9));
 
@@ -64,7 +73,7 @@ Leap.loop({background: true, frameEventName: 'animationFrame'}, {
         if (hand.pinchStrength <= 0.80 && pressed) {
             pressed = false;
             $("#verticalSlider").css("background-color", "dimgrey")
-            windowApp(range, true)
+            if(dontActivate === false){windowApp(range, true)}
             freezeValue = false
         }
 
@@ -99,6 +108,20 @@ Leap.loop({background: true, frameEventName: 'animationFrame'}, {
 
 function map(value, in_min, in_max, out_min, out_max) {
     return (value - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+function setApplication(id) {
+    app = id
+    console.log("Anwendung "+app+" aktiv")
+    //1 = ventilator
+    //2 = Automat
+}
+
+function toggleTimeout() {
+    console.log("dontactivate "+dontActivate)
+    dontActivate = !dontActivate
+    console.log("dontactivate "+dontActivate)
+
 }
 
 //Oberes Maximum

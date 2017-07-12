@@ -98,5 +98,5 @@ input {
 }
 
 .windowApplication {
-    display: none;
+    display: block;
 }
