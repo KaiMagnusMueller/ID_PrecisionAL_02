@@ -68,8 +68,8 @@ function windowApp(scaleLevel, confirmed){
     if (app === 1) {
         //MOTOR PIN 9 0,
         var fanSpeed = function () {
-            var fanSpeed = map(scaleLevel, 0, scaleMax, 40, 255)
-            if(fanSpeed === 40) {fanSpeed = 0}
+            var fanSpeed = map(scaleLevel, 0, scaleMax, 20, 200)
+            if(fanSpeed === 20) {fanSpeed = 0}
             return fanSpeed
         }
         analogLED4.brightness(fanSpeed())
@@ -99,7 +99,8 @@ function windowApp(scaleLevel, confirmed){
 
         }
     }
-    console.log("current: "+ scaleLevel)
+    console.log(bLED)
+    // console.log("current: "+ scaleLevel)
     analogLED1.brightness(bLED[0]) //PIN 3 = green
     analogLED2.brightness(bLED[1]) //PIN 5 = red
 
@@ -127,7 +128,7 @@ function windowApp(scaleLevel, confirmed){
             analogLED4.brightness(0)
             console.log("%cbackward, 0", "color: green;")
             toggleTimeout()
-        }, 900);
+        }, 1000);
 
     }
 

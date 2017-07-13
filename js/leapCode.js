@@ -35,10 +35,12 @@ Leap.loop({background: true, frameEventName: 'animationFrame'}, {
 
         posThumb = hand.palmPosition[1];
 
+        // console.log(hand.palmPosition)
+
         if(app === 1){
             range = Math.min(
             Math.max(
-                Math.round(map(posThumb, 50, 300, 0, scaleMax))
+                Math.round(map(posThumb, 125, 400, 0, scaleMax))
                 , 0)
             , scaleMax);}
 
@@ -50,11 +52,15 @@ Leap.loop({background: true, frameEventName: 'animationFrame'}, {
         //Setze waitingForUser nur dann false wenn die hand unter 150mm enfernt ist
         // und WinApp aktiv ist
         // waitingForUser false sorgt dann weiter unten für die ausführung des Experiments
-        if (hand.palmPosition[2] < 150 && waitingForUser) {
+        if (hand.palmPosition[2] < 150 && hand.palmPosition[2] > -150 && hand.palmPosition[0] < 150 && hand.palmPosition[0] > -150 && waitingForUser) {
             waitingForUser = false
             $("#verticalSlider").css("background-color", "dimgrey")
             console.log("Warte auf eingabe")
-        } else if (hand.palmPosition[2] > 150 && !waitingForUser){
+            var bLED = getLEDBr(range)
+            analogLED1.brightness(bLED[0]) //PIN 3 = green
+            analogLED2.brightness(bLED[1]) //PIN 5 = red
+
+        } else if (!waitingForUser && (hand.palmPosition[2] > 150 || hand.palmPosition[2] < -150 || hand.palmPosition[0] > 150 || hand.palmPosition[0] < -150)){
             waitingForUser = true
             winPulseStartOnce = true
             freezeValue = false
@@ -125,6 +131,6 @@ function toggleTimeout() {
 }
 
 //Oberes Maximum
-var scaleMax = 10
+var scaleMax = 5
 //Schrittgröße in Pixeln
-var stepPercent = 10
+var stepPercent = 20
