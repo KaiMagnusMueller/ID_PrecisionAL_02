@@ -40,7 +40,7 @@ Leap.loop({background: true, frameEventName: 'animationFrame'}, {
         if(app === 1){
             range = Math.min(
             Math.max(
-                Math.round(map(posThumb, 125, 400, 0, scaleMax))
+                Math.round(map(posThumb, 125, 300, 0, scaleMax))
                 , 0)
             , scaleMax);}
 

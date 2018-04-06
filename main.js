@@ -68,7 +68,7 @@ function windowApp(scaleLevel, confirmed){
     if (app === 1) {
         //MOTOR PIN 9 0,
         var fanSpeed = function () {
-            var fanSpeed = map(scaleLevel, 0, scaleMax, 20, 200)
+            var fanSpeed = map(scaleLevel, 0, scaleMax, 20, 150)
             if(fanSpeed === 20) {fanSpeed = 0}
             return fanSpeed
         }
